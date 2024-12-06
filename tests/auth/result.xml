@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.373" timestamp="2024-12-06T14:53:42.005567+01:00" hostname="PEPZRSIP066"><testcase classname="tests.auth.test_valid" name="test_valid" time="0.114"><failure message="requests.exceptions.MissingSchema: Invalid URL '/auth': No scheme supplied. Perhaps you meant https:///auth?">test_valid.py:9: in test_valid
+    response: requests.Response = requests.post(url=env_config_auth_url, json=user_config.model_dump())
+..\..\.venv\Lib\site-packages\requests\api.py:115: in post
+    return request("post", url, data=data, json=json, **kwargs)
+..\..\.venv\Lib\site-packages\requests\api.py:59: in request
+    return session.request(method=method, url=url, **kwargs)
+..\..\.venv\Lib\site-packages\requests\sessions.py:575: in request
+    prep = self.prepare_request(req)
+..\..\.venv\Lib\site-packages\requests\sessions.py:484: in prepare_request
+    p.prepare(
+..\..\.venv\Lib\site-packages\requests\models.py:367: in prepare
+    self.prepare_url(url, params)
+..\..\.venv\Lib\site-packages\requests\models.py:438: in prepare_url
+    raise MissingSchema(
+E   requests.exceptions.MissingSchema: Invalid URL '/auth': No scheme supplied. Perhaps you meant https:///auth?</failure></testcase></testsuite></testsuites>

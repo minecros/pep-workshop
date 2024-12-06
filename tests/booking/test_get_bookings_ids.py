@@ -1,21 +1,39 @@
 import requests
 from pytest_check import check
+from src.models.bookings import BookingWithId, Booking
 
 
-def test_invalid(env_config, user_config, env_config_booking_url):
-    response: requests.Response = requests.get(url=env_config_booking_url)
-    print(response.text)
+def test_get_all_booking_ids(booking_url):
+    response: requests.Response = requests.get(url=booking_url)
 
     with check:
         assert response.status_code == 200
 
-
-def test_bad_method(env_config_booking_url):
-    response: requests.Response = requests.post(url=env_config_booking_url)
-    assert response.status_code == 500
-
-
-def test_valid_response(env_config_booking_url):
-    response: requests.Response = requests.get(url=env_config_booking_url)
     with check:
-        assert (response.json())["bookingid"][0] == 67
+        assert len(response.json()) > 0
+
+    with check:
+        assert "bookingid" in response.json()[0]
+
+    with check:
+        assert isinstance(response.json()[0]["bookingid"], int)
+
+
+# def test_get_booking_by_first_name(booking_url, single_booking_with_id):
+#     params = {
+#         "firstname": single_booking_with_id.booking.firstname.lower(),
+#         "lastname": single_booking_with_id.booking.lastname.lower(),
+#     }
+#     print(params)
+#     response: requests.Response = requests.get(url=booking_url, params=params)
+#     print(response.json())
+
+
+def test_get_booking_by_id(booking_url, single_booking_with_id):
+    response: requests.Response = requests.get(url=f"{booking_url}/{single_booking_with_id.bookingid}")
+    booking = Booking.model_validate(response.json())
+
+    with check:
+        assert response.status_code == 200
+    with check:
+        assert booking == single_booking_with_id.booking
