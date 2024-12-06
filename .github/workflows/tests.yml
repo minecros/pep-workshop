@@ -3,7 +3,13 @@ permissions:
   actions: write
   checks: write
   contents: read
-on: [push, workflow_dispatch]
+on:
+  push:                        # Uruchomienie przy pushu
+  workflow_dispatch:           # Ręczne wywołanie z GitHub Actions
+  schedule:                    # Uruchamianie wg harmonogramu
+    # Wywoływanie co 15 minut
+    - cron: "*/1 * * * *"
+
 jobs:
   run-tests:
     runs-on: ubuntu-latest
